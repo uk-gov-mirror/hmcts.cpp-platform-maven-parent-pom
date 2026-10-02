@@ -146,9 +146,6 @@
 
         <!-- CI hooks -->
         <ci.hook.fixup-versions.skip>true</ci.hook.fixup-versions.skip>
-
-        <!-- Updated by CI hooks -->
-        <cpp.parent-pom.version>25.104.0-M1-SNAPSHOT</cpp.parent-pom.version>
     </properties>
 
     <!--

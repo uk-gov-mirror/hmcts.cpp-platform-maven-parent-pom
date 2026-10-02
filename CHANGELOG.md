@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file, which follo
 on [Keep a CHANGELOG](http://keepachangelog.com/). This project adheres to
 [Semantic Versioning](http://semver.org/).
 
+## [25.104.5] - 2026-10-02
+### Removed
+- The `cpp.parent-pom.version` property, and this project's own `.ci-hooks/fixup-versions` script. The hook did one thing: copy this pom's `<version>` into that property. Nothing read it — it is referenced by no pom in the estate — and the hook was not firing anyway, so the value had drifted to `25.104.0-M1-SNAPSHOT` while the project moved on to `25.104.5`. A plausible-looking but stale version in the properties block is worse than no property; `${project.version}` already gives a pom its own version and cannot go stale.
+
+### Note
+- The hook machinery itself is unchanged and still inherited by every project built on this pom: the `ci.hook.fixup-versions.skip` property, the `ci-hook-fixup-versions` profile and the `exec-maven-plugin` execution all remain. `cpp-platform-libraries` still uses them. Removing only this project's `.ci-hooks/fixup-versions` script stops the profile activating here.
+
 ## [25.104.4] - 2026-09-14
 ### Changed
 - `liquibase-postgres-compatibility` now takes its version from `framework-libraries-bom` (reachable here via `platform-libraries-bom` → `event-store-bom` → `framework-bom`). Removed the `liquibase.postgres.compatibility.version` property added in 25.104.3 — pinning a framework-libraries artifact here duplicated version management and would have required releasing this project on every framework-libraries release.
